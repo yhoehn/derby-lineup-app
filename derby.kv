@@ -1,0 +1,334 @@
+<MainLayout>:
+    orientation: "vertical"
+    padding: 10
+    spacing: 10
+
+    # ---------------------------------------------------------
+    # TOP INPUT BAR – OPTIMIZED TABLET BUTTONS
+    # ---------------------------------------------------------
+    BoxLayout:
+        size_hint_y: None
+        height: "110dp"
+        spacing: 10
+        padding: 10
+
+        TextInput:
+            id: in_name
+            hint_text: "Name"
+            font_size: "22sp"
+
+        TextInput:
+            id: in_number
+            hint_text: "Number"
+            font_size: "22sp"
+
+        TextInput:
+            id: in_role
+            hint_text: "Role (B/J/P)"
+            font_size: "22sp"
+
+        Button:
+            text: "ADD"
+            font_size: "24sp"
+            on_release: root.add_player(in_name.text, in_number.text, in_role.text)
+
+        # UNDO/REDO gestapelt
+        BoxLayout:
+            orientation: "vertical"
+            spacing: 5
+            
+            Button:
+                text: "UNDO"
+                font_size: "20sp"
+                on_release: root.undo()
+            
+            Button:
+                text: "REDO"
+                font_size: "20sp"
+                on_release: root.redo()
+
+        Button:
+            text: "ROTATE"
+            font_size: "24sp"
+            on_release: root.rotate_lineup()
+
+        Button:
+            text: "FILL"
+            font_size: "24sp"
+            on_release: root.fill_current_line()
+
+        Button:
+            text: "CLEAR"
+            font_size: "24sp"
+            on_release: root.confirm_clear_boxes()
+
+        Button:
+            text: "IMPORT"
+            font_size: "24sp"
+            on_release: root.import_players_json()
+
+        Button:
+            text: "EXPORT"
+            font_size: "24sp"
+            on_release: root.export_players_json()
+
+    # ---------------------------------------------------------
+    # MAIN AREA - 5 SPALTEN
+    # ---------------------------------------------------------
+    BoxLayout:
+        spacing: 10
+
+        # SPALTE 1: PLAYER POOL (Links, ~30%)
+        BoxLayout:
+            orientation: "vertical"
+            size_hint_x: 0.30
+            spacing: 0
+
+            BoxLayout:
+                orientation: "vertical"
+                padding: 10
+                canvas.before:
+                    Color:
+                        rgba: 1,1,1,1
+                    RoundedRectangle:
+                        pos: self.pos
+                        size: self.size
+                        radius: [10]
+
+                Label:
+                    text: "Player Pool"
+                    size_hint_y: None
+                    height: "50dp"
+                    font_size: "24sp"
+                    bold: True
+
+                ScrollView:
+                    GridLayout:
+                        id: player_pool
+                        cols: 1
+                        size_hint_y: None
+                        height: self.minimum_height
+                        spacing: 15
+
+        # SPALTE 2: CURRENT LINE + JAMMER (~17.5%)
+        BoxLayout:
+            orientation: "vertical"
+            size_hint_x: 0.175
+            spacing: 10
+
+            # Header für Current
+            Label:
+                text: "CURRENT"
+                font_size: "26sp"
+                bold: True
+                size_hint_y: None
+                height: "40dp"
+                color: 0.2, 0.5, 0.8, 1
+
+            BoxLayout:
+                id: line_a_box
+                orientation: "vertical"
+                padding: 10
+                spacing: 15
+                size_hint_y: 0.72
+                canvas.before:
+                    Color:
+                        rgba: .7,.85,1,1
+                    RoundedRectangle:
+                        pos: self.pos
+                        size: self.size
+                        radius: [10]
+
+                Label:
+                    text: "Line"
+                    font_size: "20sp"
+                    bold: True
+                    size_hint_y: None
+                    height: "35dp"
+
+            BoxLayout:
+                id: current_jammer_box
+                orientation: "vertical"
+                padding: 10
+                spacing: 15
+                size_hint_y: 0.28
+                canvas.before:
+                    Color:
+                        rgba: .7,.85,1,1
+                    RoundedRectangle:
+                        pos: self.pos
+                        size: self.size
+                        radius: [10]
+
+                Label:
+                    text: "Jammer"
+                    font_size: "20sp"
+                    bold: True
+                    size_hint_y: None
+                    height: "35dp"
+
+        # SPALTE 3: NEXT LINE + JAMMER (~17.5%)
+        BoxLayout:
+            orientation: "vertical"
+            size_hint_x: 0.175
+            spacing: 10
+
+            # Header für Next
+            Label:
+                text: "NEXT"
+                font_size: "26sp"
+                bold: True
+                size_hint_y: None
+                height: "40dp"
+                color: 0.8, 0.6, 0.1, 1
+
+            BoxLayout:
+                id: line_b_box
+                orientation: "vertical"
+                padding: 10
+                spacing: 15
+                size_hint_y: 0.72
+                canvas.before:
+                    Color:
+                        rgba: 1,.9,.6,1
+                    RoundedRectangle:
+                        pos: self.pos
+                        size: self.size
+                        radius: [10]
+
+                Label:
+                    text: "Line"
+                    font_size: "20sp"
+                    bold: True
+                    size_hint_y: None
+                    height: "35dp"
+
+            BoxLayout:
+                id: next_jammer_box
+                orientation: "vertical"
+                padding: 10
+                spacing: 15
+                size_hint_y: 0.28
+                canvas.before:
+                    Color:
+                        rgba: 1,.9,.6,1
+                    RoundedRectangle:
+                        pos: self.pos
+                        size: self.size
+                        radius: [10]
+
+                Label:
+                    text: "Jammer"
+                    font_size: "20sp"
+                    bold: True
+                    size_hint_y: None
+                    height: "35dp"
+
+        # SPALTE 4: THIRD LINE + JAMMER (~17.5%)
+        BoxLayout:
+            orientation: "vertical"
+            size_hint_x: 0.175
+            spacing: 10
+
+            # Header für Third
+            Label:
+                text: "THIRD"
+                font_size: "26sp"
+                bold: True
+                size_hint_y: None
+                height: "40dp"
+                color: 0.8, 0.2, 0.2, 1
+
+            BoxLayout:
+                id: line_c_box
+                orientation: "vertical"
+                padding: 10
+                spacing: 15
+                size_hint_y: 0.72
+                canvas.before:
+                    Color:
+                        rgba: 1,.75,.75,1
+                    RoundedRectangle:
+                        pos: self.pos
+                        size: self.size
+                        radius: [10]
+
+                Label:
+                    text: "Line"
+                    font_size: "20sp"
+                    bold: True
+                    size_hint_y: None
+                    height: "35dp"
+
+            BoxLayout:
+                id: third_jammer_box
+                orientation: "vertical"
+                padding: 10
+                spacing: 15
+                size_hint_y: 0.28
+                canvas.before:
+                    Color:
+                        rgba: 1,.75,.75,1
+                    RoundedRectangle:
+                        pos: self.pos
+                        size: self.size
+                        radius: [10]
+
+                Label:
+                    text: "Jammer"
+                    font_size: "20sp"
+                    bold: True
+                    size_hint_y: None
+                    height: "35dp"
+
+        # SPALTE 5: PENALTY + INJURED (~17.5%)
+        BoxLayout:
+            orientation: "vertical"
+            size_hint_x: 0.175
+            spacing: 10
+
+            # Header für Penalty
+            Label:
+                text: "PENALTY"
+                font_size: "26sp"
+                bold: True
+                size_hint_y: None
+                height: "40dp"
+                color: 0.3, 0.3, 0.3, 1
+
+            BoxLayout:
+                id: penalty_box
+                orientation: "vertical"
+                padding: 10
+                spacing: 15
+                size_hint_y: 0.72
+                canvas.before:
+                    Color:
+                        rgba: .7,.7,.7,1
+                    RoundedRectangle:
+                        pos: self.pos
+                        size: self.size
+                        radius: [10]
+
+            # Header für Injured
+            Label:
+                text: "INJURED"
+                font_size: "22sp"
+                bold: True
+                size_hint_y: None
+                height: "30dp"
+                color: 0.8, 0.2, 0.2, 1
+
+            BoxLayout:
+                id: injured_box
+                orientation: "vertical"
+                padding: 10
+                spacing: 10
+                size_hint_y: 0.18
+                canvas.before:
+                    Color:
+                        rgba: .9,.6,.6,1
+                    RoundedRectangle:
+                        pos: self.pos
+                        size: self.size
+                        radius: [10]
