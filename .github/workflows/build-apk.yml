@@ -13,22 +13,27 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      # FIX: Berechtigungen vor dem Build setzen
-      - name: Fix permissions
-        run: |
-          sudo chown -R runner:docker $GITHUB_WORKSPACE
-          sudo chmod -R 755 $GITHUB_WORKSPACE
-
-      - name: Build with Buildozer
-        uses: ArtemSBulgakov/buildozer-action@v1
-        id: buildozer
+      - name: Set up Python
+        uses: actions/setup-python@v5
         with:
-          workdir: .
-          buildozer_version: stable
-          repository_root: .
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y git zip unzip openjdk-17-jdk wget
+          pip3 install --upgrade pip
+          pip3 install --upgrade buildozer cython virtualenv
+
+      - name: Build APK with Buildozer
+        run: |
+          buildozer android debug
+        env:
+          ANDROID_SDK_ROOT: /usr/local/lib/android/sdk
+          ANDROID_HOME: /usr/local/lib/android/sdk
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
           name: derby-lineup-apk
-          path: ${{ steps.buildozer.outputs.filename }}
+          path: bin/*.apk
