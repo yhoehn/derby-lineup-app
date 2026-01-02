@@ -8,20 +8,27 @@ on:
 jobs:
   build:
     runs-on: ubuntu-22.04
-    
+
     steps:
-    - name: Checkout
-      uses: actions/checkout@v4
-    
-    - name: Build with Buildozer
-      uses: ArtemSBulgakov/buildozer-action@v1
-      id: buildozer
-      with:
-        workdir: .
-        buildozer_version: stable
-    
-    - name: Upload APK
-      uses: actions/upload-artifact@v4
-      with:
-        name: derby-lineup-apk
-        path: ${{ steps.buildozer.outputs.filename }}
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      # FIX: Berechtigungen vor dem Build setzen
+      - name: Fix permissions
+        run: |
+          sudo chown -R runner:docker $GITHUB_WORKSPACE
+          sudo chmod -R 755 $GITHUB_WORKSPACE
+
+      - name: Build with Buildozer
+        uses: ArtemSBulgakov/buildozer-action@v1
+        id: buildozer
+        with:
+          workdir: .
+          buildozer_version: stable
+          repository_root: .
+
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: derby-lineup-apk
+          path: ${{ steps.buildozer.outputs.filename }}
