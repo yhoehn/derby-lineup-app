@@ -86,7 +86,7 @@ class PlayerCard(BoxLayout):
         self.parent_layout = parent_layout
 
         self.size_hint_y = None
-        self.height = 72
+        self.height = 90  # GEÄNDERT: 72 -> 90 für mehr Platz
         self.orientation = "horizontal"
         self.padding = (12, 10)
         self.spacing = 10

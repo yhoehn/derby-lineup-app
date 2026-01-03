@@ -73,15 +73,15 @@
             on_release: root.export_players_json()
 
     # ---------------------------------------------------------
-    # MAIN AREA - 5 SPALTEN
+    # MAIN AREA - 5 SPALTEN (OPTIMIERT)
     # ---------------------------------------------------------
     BoxLayout:
         spacing: 10
 
-        # SPALTE 1: PLAYER POOL (Links, ~30%)
+        # SPALTE 1: PLAYER POOL (Links, ~25% - SCHMALER)
         BoxLayout:
             orientation: "vertical"
-            size_hint_x: 0.30
+            size_hint_x: 0.25
             spacing: 0
 
             BoxLayout:
@@ -108,12 +108,12 @@
                         cols: 1
                         size_hint_y: None
                         height: self.minimum_height
-                        spacing: 15
+                        spacing: 12
 
-        # SPALTE 2: CURRENT LINE + JAMMER (~17.5%)
+        # SPALTE 2: CURRENT LINE + JAMMER (~18.75% - BREITER)
         BoxLayout:
             orientation: "vertical"
-            size_hint_x: 0.175
+            size_hint_x: 0.1875
             spacing: 10
 
             # Header für Current
@@ -129,7 +129,7 @@
                 id: line_a_box
                 orientation: "vertical"
                 padding: 10
-                spacing: 15
+                spacing: 8
                 size_hint_y: 0.72
                 canvas.before:
                     Color:
@@ -150,7 +150,7 @@
                 id: current_jammer_box
                 orientation: "vertical"
                 padding: 10
-                spacing: 15
+                spacing: 8
                 size_hint_y: 0.28
                 canvas.before:
                     Color:
@@ -167,10 +167,10 @@
                     size_hint_y: None
                     height: "35dp"
 
-        # SPALTE 3: NEXT LINE + JAMMER (~17.5%)
+        # SPALTE 3: NEXT LINE + JAMMER (~18.75% - BREITER)
         BoxLayout:
             orientation: "vertical"
-            size_hint_x: 0.175
+            size_hint_x: 0.1875
             spacing: 10
 
             # Header für Next
@@ -186,7 +186,7 @@
                 id: line_b_box
                 orientation: "vertical"
                 padding: 10
-                spacing: 15
+                spacing: 8
                 size_hint_y: 0.72
                 canvas.before:
                     Color:
@@ -207,7 +207,7 @@
                 id: next_jammer_box
                 orientation: "vertical"
                 padding: 10
-                spacing: 15
+                spacing: 8
                 size_hint_y: 0.28
                 canvas.before:
                     Color:
@@ -224,10 +224,10 @@
                     size_hint_y: None
                     height: "35dp"
 
-        # SPALTE 4: THIRD LINE + JAMMER (~17.5%)
+        # SPALTE 4: THIRD LINE + JAMMER (~18.75% - BREITER)
         BoxLayout:
             orientation: "vertical"
-            size_hint_x: 0.175
+            size_hint_x: 0.1875
             spacing: 10
 
             # Header für Third
@@ -243,7 +243,7 @@
                 id: line_c_box
                 orientation: "vertical"
                 padding: 10
-                spacing: 15
+                spacing: 8
                 size_hint_y: 0.72
                 canvas.before:
                     Color:
@@ -264,7 +264,7 @@
                 id: third_jammer_box
                 orientation: "vertical"
                 padding: 10
-                spacing: 15
+                spacing: 8
                 size_hint_y: 0.28
                 canvas.before:
                     Color:
@@ -281,10 +281,10 @@
                     size_hint_y: None
                     height: "35dp"
 
-        # SPALTE 5: PENALTY + INJURED (~17.5%)
+        # SPALTE 5: PENALTY + INJURED (~18.75% - BREITER)
         BoxLayout:
             orientation: "vertical"
-            size_hint_x: 0.175
+            size_hint_x: 0.1875
             spacing: 10
 
             # Header für Penalty
@@ -300,7 +300,7 @@
                 id: penalty_box
                 orientation: "vertical"
                 padding: 10
-                spacing: 15
+                spacing: 8
                 size_hint_y: 0.72
                 canvas.before:
                     Color:
@@ -323,7 +323,7 @@
                 id: injured_box
                 orientation: "vertical"
                 padding: 10
-                spacing: 10
+                spacing: 8
                 size_hint_y: 0.18
                 canvas.before:
                     Color:
